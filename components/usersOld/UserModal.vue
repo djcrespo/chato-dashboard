@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import UserForm from '~/components/users/UserForm.vue'
+import UserForm from '~/components/usersOld/UserForm.vue'
 export default {
   name: 'UserModal',
   components: {

@@ -63,7 +63,7 @@
 </style>
 
 <script>
-import UserActions from '~/components/users/UserActions.vue'
+import UserActions from '~/components/usersOld/UserActions.vue'
 export default {
   components: {
     UserActions

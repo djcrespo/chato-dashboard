@@ -20,7 +20,7 @@
       @menu-click="menuClick"
       @close="menuSecondaryCloseClick"
     />
-    <title-bar :title-stack="titleStack" />
+    <!--<title-bar :title-stack="titleStack" />-->
     <nuxt />
     <aside-right />
   </div>
@@ -45,95 +45,52 @@ export default {
       return this.$store.state.titleStack
     },
     menu () {
-      if (this.$store.state.user.groups[0] === 2) {
-        return [
-          'GENERAL',
-          [
-            {
-              to: '/',
-              state: '1primary',
-              icon: 'home',
-              label: 'Inicio'
-            }
-          ]
+      return [
+        'GENERAL',
+        [
+          {
+            to: '/',
+            state: '1primary',
+            icon: 'home',
+            label: 'Inicio'
+          },
+          {
+            to: '/aircrafts/',
+            label: 'Aeronaves',
+            icon: 'plane'
+          },
+          {
+            to: '/maintenance/',
+            label: 'Mantenimientos',
+            icon: 'wrench'
+          },
+          {
+            to: '/workorder/',
+            label: 'Orden de trabajo',
+            icon: 'book'
+          },
+          {
+            to: '/flighttime/',
+            label: 'Tiempo de vuelo',
+            icon: 'clock'
+          },
+          {
+            to: '/releases/',
+            label: 'Liberacion de Aeronave',
+            icon: 'check'
+          },
+          {
+            to: '/users/',
+            label: 'Usuarios',
+            icon: 'user'
+          },
+          {
+            to: '/airplanemodel/',
+            label: 'Configuracion / Modelos',
+            icon: 'cog'
+          }
         ]
-      } else {
-        return [
-          'GENERAL',
-          [
-            {
-              to: '/',
-              state: '1primary',
-              icon: 'home',
-              label: 'Inicio'
-            },
-            {
-              to: '/policies',
-              label: 'Pólizas',
-              state: '1warning',
-              icon: 'shield-plus'
-            },
-            {
-              to: '/clients',
-              label: 'Clientes',
-              state: '1success',
-              icon: 'users-alt'
-            },
-            {
-              to: '/employees',
-              label: 'Vendedores',
-              state: '1orange',
-              icon: 'user-md'
-            },
-            {
-              to: '/insurances',
-              label: 'Aseguradoras',
-              state: '1info',
-              icon: 'university'
-            },
-            {
-              to: '/products',
-              label: 'Productos',
-              state: '1white',
-              icon: 'archive'
-            }
-          ],
-          'ADMINISTRACIÓN',
-          [
-            // {
-            //   to: '/roles',
-            //   label: 'Roles',
-            //   state: '1warning',
-            //   icon: 'lock'
-            // },
-            {
-              to: '/reporting',
-              label: 'Reportes',
-              state: '1primary',
-              icon: 'file-download-alt'
-            },
-            {
-              label: 'Mensajería',
-              state: '1success',
-              icon: 'envelopes',
-              menu: [
-                {
-                  to: '/templates',
-                  label: 'Plantillas',
-                  state: '1dark',
-                  icon: 'fast-mail-alt'
-                },
-                {
-                  to: '/messages',
-                  label: 'Envíos',
-                  state: '1dark',
-                  icon: 'envelope-send'
-                }
-              ]
-            }
-          ]
-        ]
-      }
+      ]
     },
     menuBottom () {
       return [

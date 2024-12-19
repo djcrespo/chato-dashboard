@@ -90,7 +90,13 @@ export default {
       '~/components',
       '~/components/base',
       '~/components/forms',
-      '~/components/cards'
+      '~/components/general',
+      '~/components/cards',
+      '~/components/aircrafts',
+      '~/components/usersOld',
+      '~/components/users',
+      '~/components/maintenance',
+      '~/components/airplanemodel'
     ]
   },
   devtools: true,
