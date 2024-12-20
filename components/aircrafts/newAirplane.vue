@@ -1,5 +1,10 @@
 <template>
   <b-modal v-model="activeModal" :can-cancel="false">
+    <b-loading
+      v-model="isLoading"
+      :is-full-page="false"
+      :can-cancel="false"
+    />
     <form action="">
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
@@ -292,6 +297,7 @@ export default {
   },
   data () {
     return {
+      isLoading: false,
       form: {
         tuition: 'XA-',
         type_tuition: 'XA',
@@ -307,16 +313,29 @@ export default {
   methods: {
     async getallPlanemodel () {
       try {
-        const res = await this.$store.dispatch('modules/planes/getallPlanemodel')
-        this.optionsModels = res.results
+        this.isLoading = true
+        const res = await this.$store.dispatch('modules/aircrafts/getAllModels')
+        this.optionsModels = res.count > 0 ? res.results : []
+        this.isLoading = false
       } catch (error) {
+        this.isLoading = false
         console.log(error)
       }
     },
     async save () {
+      this.isLoading = true
       try {
         await this.$store.dispatch('modules/planes/createPlane', this.form)
+        this.form = {
+          tuition: 'XA-',
+          type_tuition: 'XA',
+          enginers: [],
+          proppellers: []
+        }
+        this.isLoading = false
+        this.$emit('close')
       } catch (error) {
+        this.isLoading = false
         console.log(error)
       }
     },

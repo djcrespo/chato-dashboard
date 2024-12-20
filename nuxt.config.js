@@ -3,14 +3,14 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: 'PARAMQ - admin',
+    title: 'Aircrafs admin',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
-        content: 'Panel de control para aseguradoras'
+        content: 'Panel de control de aeornaves y mantenimiento'
       }
     ],
     link: [

@@ -1,80 +1,51 @@
 <template>
-  <b-modal v-model="planeActive">
+  <b-modal v-model="activePlane" :can-cancel="false">
+    <b-loading
+      v-model="isLoading"
+      :is-full-page="false"
+      :can-cancel="false"
+    />
     <form action="">
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
           <p class="modal-card-title">
-            MODIFICAR MODELOS
+            Editar modelo
           </p>
         </header>
         <section class="modal-card-body">
           <div class="container">
             <div class="columns">
-              <div class="column is-4">
-                <b-field label="Modelo de Aeronave">
-                  <b-input value="Cessna 172" />
+              <div class="column">
+                <b-field label="Modelo">
+                  <b-input
+                    v-model="form.model"
+                    placeholder="Cessna 172"
+                  />
                 </b-field>
               </div>
             </div>
-            <div class="columns">
-              <div class="column is-2">
-                <b-button
-                  label="Limpiar"
-                  type="is-danger"
-                  @click="$emit('close')"
-                />
-              </div>
-              <div class="column">
-                <b-button
-                  label="Modficar"
-                  type="is-warning"
-                />
+            <hr>
+            <div class="level">
+              <div class="level-left" />
+              <div class="level-right">
+                <div class="level-item">
+                  <b-button
+                    label="Cancelar"
+                    type="is-light"
+                    @click="close"
+                  />
+                </div>
+                <div class="level-item">
+                  <b-button
+                    label="Guardar"
+                    type="is-success"
+                    @click="save"
+                  />
+                </div>
               </div>
             </div>
           </div>
-          <hr>
-          <div class="container">
-            <b-tabs>
-              <b-tab-item label="Modelos de Aeronaves">
-                <b-table
-                  :data="data"
-                  :columns="columns"
-                  :selected.sync="selected"
-                  focusable
-                  bordered="isBordered"
-                  striped="isStriped"
-                />
-              </b-tab-item>
-
-              <b-tab-item label="Selected">
-                <pre>{{ selected }}</pre>
-              </b-tab-item>
-            </b-tabs>
-
-            <b-field>
-              <b-button
-                label="Limpiar Seleccion"
-                type="is-danger"
-                icon-left="close"
-                :disabled="!selected"
-                @click="selected = null"
-              />
-            </b-field>
-          </div>
         </section>
-        <!--
-          <footer class="modal-card-foot">
-            <b-button
-              label="Limpiar"
-              type="is-danger"
-              @click="$emit('close')"
-            />
-            <b-button
-              label="Guardar"
-              type="is-success"
-            />
-          </footer>
-          -->
       </div>
     </form>
   </b-modal>
@@ -82,51 +53,49 @@
 
 <script>
 export default {
-  name: 'NewPlanemodel',
+  name: 'EditPlanemodel',
   props: {
     activePlane: {
       type: Boolean,
       default: false
+    },
+    modelSelect: {
+      type: Object,
+      default: () => {}
     }
   },
   data () {
-    const data = [
-      { id: 1, first_name: 'Cessna grand caravn b208' },
-      { id: 2, first_name: 'Pipistel virus 172' }
-    ]
     return {
-      data,
-      isBordered: false,
-      isStriped: false,
-      selected: data[0],
-      columns: [
-        {
-          field: 'id',
-          label: 'ID',
-          width: '100',
-          numeric: true,
-          searchable: true
-        },
-        {
-          field: 'first_name',
-          label: 'MODELO DE AERONAVE',
-          searchable: true
-        }
-      ],
+      isLoading: false,
       form: {
+        model: ''
+      }
+    }
+  },
+  watch: {
+    activePlane (newVal, oldVal) {
+      if (newVal) {
+        this.form = this.modelSelect
       }
     }
   },
   methods: {
-    clearDate () {
-      this.selected = null
-    },
     async save () {
+      this.isLoading = true
       try {
-        await this.$store.dispatch('modules/planes/createPlane', this.form)
+        console.log(this.form)
+        await this.$store.dispatch('modules/aircrafts/updatePartialModel', this.form)
+        this.form = {}
+        this.isLoading = false
+        this.$emit('close')
       } catch (error) {
+        this.isLoading = false
         console.log(error)
       }
+    },
+    close () {
+      this.form = {}
+      this.$emit('close')
     }
   }
 }
